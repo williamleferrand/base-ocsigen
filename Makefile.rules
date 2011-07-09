@@ -1,0 +1,62 @@
+
+SERVERINCLUDES := $(EXTRADIRS:%=-I ${TEMP}/server/%) $(INCLUDES:%=-I %/${TEMP}/server/)
+CLIENTINCLUDES := $(EXTRADIRS:%=-I ${TEMP}/client/%) $(INCLUDES:%=-I %/${TEMP}/client/)
+
+.SECONDARY: ${${wildcard *.eliom}:%.eliom=${TEMP}/%.type.mli}
+${TEMP}/%.type_mli: %.eliom
+	${ELIOMC} -infer -dir ${TEMP}/server -type-dir ${TEMP} ${SERVERLIB} $<
+
+## server side ##########
+
+SERVERCMOS := $(SERVERFILES:%.eliom=${TEMP}/server/%.cmo)
+SERVERCMOS := $(SERVERCMOS:%.ml=${TEMP}/server/%.cmo)
+
+SERVERLIB  := ${SERVERLIB} ${SERVERINCLUDES}
+
+${TEMP}/server/%.cmi: %.mli
+	${ELIOMC} -c -dir ${TEMP}/server ${SERVERLIB} $<
+${TEMP}/server/%.cmo: %.ml
+	${ELIOMC} -c -dir ${TEMP}/server ${SERVERLIB} $<
+${TEMP}/server/%.cmo: %.eliom
+	${ELIOMC} -c -noinfer -dir ${TEMP}/server ${SERVERLIB} $<
+
+${TEMP}/server/$(MODULE).cmo: $(SERVERCMOS)
+	${ELIOMC} -pack -o $@ $^
+
+server-byte: ${TEMP}/server/$(MODULE).cmo
+
+## client side ##########
+
+CLIENTCMOS := $(CLIENTFILES:%.eliom=${TEMP}/client/%.cmo)
+CLIENTCMOS := $(CLIENTCMOS:%.ml=${TEMP}/client/%.cmo)
+
+CLIENTLIB  := ${CLIENTLIB} ${CLIENTINCLUDES}
+
+${TEMP}/client/%.cmi: %.mli
+	${JS_OF_ELIOM} -c -dir ${TEMP}/client ${CLIENTLIB} $<
+${TEMP}/client/%.cmo: %.ml
+	${JS_OF_ELIOM} -c -dir ${TEMP}/client ${CLIENTLIB} $<
+${TEMP}/client/%.cmo: %.eliom ${TEMP}/%.type_mli
+	${JS_OF_ELIOM} -c -dir ${TEMP}/client -type-dir ${TEMP} ${CLIENTLIB} $<
+
+${TEMP}/client/${MODULE}.cmo: ${CLIENTCMOS}
+	${JS_OF_ELIOM} -pack -o $@ $^
+
+client: ${TEMP}/client/$(MODULE).cmo
+
+# Miscellaneous functions
+
+all: server-byte client
+
+clean:
+	-rm -rf ${TEMP}
+	-rm -rf *.cm*
+	find . |grep '~'|xargs rm -rf
+
+depend:
+	$(ELIOMDEP) -server -dir ${TEMP}/server -type-dir ${TEMP} \
+	   ${SERVERLIB} ${SERVERFILES} > .depend
+	$(ELIOMDEP) -client -dir ${TEMP}/client -type-dir ${TEMP} \
+	   ${CLIENTLIB} ${CLIENTFILES} >> .depend
+
+-include .depend

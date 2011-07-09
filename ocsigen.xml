@@ -1,0 +1,32 @@
+<!-- base-ocsigen initial configuration file -->
+
+<ocsigen>
+  <server>
+    <port>1024</port>
+
+    <logdir>/var/log/ocsigen</logdir>
+    <datadir>/var/lib/ocsigen</datadir>	
+        
+    <mimefile>/etc/ocsigen/mime.types</mimefile>
+    
+    <charset>utf-8</charset>
+    
+    <extension findlib-package="ocsigenserver.ext.staticmod"/>
+    <extension findlib-package="ocsigenserver.ext.ocsipersist-sqlite">
+      <database file="ocsidb"/>
+    </extension>
+
+    <extension findlib-package="eliom.server"/>
+    
+    <host charset="utf-8" hostfilter="*">
+      
+      <site path="" charset="utf-8">
+	  <static dir="public" />
+	  <eliom module="src/_build/server/base.cmo">
+          
+	  </eliom>
+      </site>
+    
+    </host>
+  </server>
+</ocsigen>
