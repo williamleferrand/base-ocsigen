@@ -15,14 +15,14 @@ EXTRADIRS =
 
 include ../Makefile.rules
 
-$(STATICDIR)/$(APP).js: _build/client/frontend.cmo
-		${JS_OF_ELIOM} -jsopt -pretty -verbose ${CLIENTLIB} -o ../../$@ $^
+$(STATICDIR)/$(APP).js: _build/client/${MODULE}.cmo
+		${JS_OF_ELIOM} -jsopt -pretty -verbose ${CLIENTLIB} -o ../$@ $^
 
 $(STATICDIR)/$(APP)_req.js: $(STATICDIR)/$(APP).js
-	${OCAML} str.cma $(OCLOSUREDIR)/requirements.ml ../../$^
+	${OCAML} str.cma $(OCLOSUREDIR)/requirements.ml ../$^
 
 $(STATICDIR)/$(APP)_oclosure.js: $(STATICDIR)/$(APP).js
-	${OCLOSURE_REQ} ../../$^
+	${OCLOSURE_REQ} ../$^
 
 pack: $(STATICDIR)/$(APP).js $(STATICDIR)/$(APP)_oclosure.js 
 
