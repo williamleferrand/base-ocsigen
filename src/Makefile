@@ -3,8 +3,8 @@ APP = internships
 
 include ../Makefile.config
 
-SERVERFILES := services.eliom appl.eliom nutshell.eliom home.eliom
-CLIENTFILES := home.eliom
+SERVERFILES := services.eliom appl.eliom nutshell.eliom oClosure_extra.eliom home.eliom
+CLIENTFILES := oClosure_extra.eliom home.eliom
 
 SERVERLIB := -package eliom.server
 CLIENTLIB := -package oclosure,js_of_ocaml

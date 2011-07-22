@@ -8,11 +8,11 @@ open Eliom_output.Html5
 let home content =  
   return
     (html
-       (head (title (pcdata "Internships")) 
+       (head (title (pcdata "base")) 
         [
 
           link ~rel:[ `Stylesheet ] ~href:(uri_of_string "/common.css") ();
-	    (* link ~rel:[ `Stylesheet ] ~href:(uri_of_string "http://fonts.googleapis.com/css?family=Josefin+Sans") (); *)
+	   (*
 
 	    link ~rel:[ `Stylesheet ] ~href:(uri_of_string "/closure-library/closure/goog/css/common.css") () ;
 	    link ~rel:[ `Stylesheet ] ~href:(uri_of_string "/closure-library/closure/goog/css/button.css") () ;
@@ -32,7 +32,7 @@ let home content =
 	    link ~rel:[ `Stylesheet ] ~href:(uri_of_string "/closure-library/closure/goog/css/editor/dialog.css") () ;
 	    link ~rel:[ `Stylesheet ] ~href:(uri_of_string "/closure-library/closure/goog/css/editor/linkdialog.css") () ;
 	    link ~rel:[ `Stylesheet ] ~href:(uri_of_string "/closure-library/closure/goog/css/editortoolbar.css") () ;
-	   
+	   *)
           script ~a:[ a_src (uri_of_string "/runtime.js") ] (pcdata "") ;
 	    script ~a:[ a_src (uri_of_string "/internships_oclosure.js") ] (pcdata "") ;
           
