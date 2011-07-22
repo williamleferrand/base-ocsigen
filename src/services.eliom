@@ -1,4 +1,10 @@
+(* web frontend for stages *)
+
 open Eliom_services
 open Eliom_parameters 
 
-let home = service [ "" ] any ()
+
+module Frontend = 
+  struct
+    let home = service [ "" ] any ()
+end

@@ -14,12 +14,11 @@ SERVERCMOS := $(SERVERCMOS:%.ml=${TEMP}/server/%.cmo)
 SERVERLIB  := ${SERVERLIB} ${SERVERINCLUDES}
 
 ${TEMP}/server/%.cmi: %.mli
-	${ELIOMC} -c -dir ${TEMP}/server ${SERVERLIB} $<
+	${ELIOMC} -c ${INCLUDES} -dir ${TEMP}/server ${SERVERLIB} $<
 ${TEMP}/server/%.cmo: %.ml
-	${ELIOMC} -c -dir ${TEMP}/server ${SERVERLIB} $<
+	${ELIOMC} -c ${INCLUDES} -dir ${TEMP}/server ${SERVERLIB} $<
 ${TEMP}/server/%.cmo: %.eliom
-	${ELIOMC} -c -noinfer -dir ${TEMP}/server ${SERVERLIB} $<
-
+	${ELIOMC} -c ${INCLUDES} -noinfer -dir ${TEMP}/server ${SERVERLIB} $<
 ${TEMP}/server/$(MODULE).cmo: $(SERVERCMOS)
 	${ELIOMC} -pack -o $@ $^
 
