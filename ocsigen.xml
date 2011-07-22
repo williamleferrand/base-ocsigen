@@ -9,7 +9,6 @@
     <uploaddir>/tmp</uploaddir>
     <maxuploadfilesize>20MB</maxuploadfilesize>
     <maxrequestbodysize>21MB</maxrequestbodysize>
-    <commandpipe>/Users/hypios/var/ocsigen_command</commandpipe>
 
     <mimefile>/etc/ocsigen/mime.types</mimefile>
     
@@ -27,8 +26,8 @@
     <host charset="utf-8" hostfilter="*">
       
       <site path="" charset="utf-8">
-	  <static dir="/Users/hypios/reloaded/dev/irill/internships/public" />
-	  <eliom module="/Users/hypios/reloaded/dev/irill/internships/src/_build/server/internships.cmo">
+	  <static dir="public" />
+	  <eliom module="src/_build/server/internships.cmo">
           <cache-size>10000</cache-size>
           <page-id>253865891294658</page-id>
 	    <status-storage>/tmp/statuses</status-storage>
